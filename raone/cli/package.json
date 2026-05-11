@@ -1,0 +1,26 @@
+{
+  "name": "@raoneai/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "raone": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "test": "bun test",
+    "typecheck": "bunx tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "3.24.1",
+    "uuid": "10.0.0",
+    "dotenv": "16.4.7",
+    "picocolors": "1.1.1"
+  },
+  "devDependencies": {
+    "@types/bun": "1.1.14",
+    "@types/uuid": "10.0.0",
+    "typescript": "5.7.2"
+  }
+}

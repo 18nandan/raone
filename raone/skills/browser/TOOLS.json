@@ -1,0 +1,30 @@
+{
+  "tools": [
+    {
+      "name": "web_search",
+      "description": "Search the web for information",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" },
+          "numResults": { "type": "number", "default": 5 }
+        },
+        "required": ["query"]
+      },
+      "runner": "host"
+    },
+    {
+      "name": "web_fetch",
+      "description": "Fetch and extract content from a URL",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "format": { "type": "string", "enum": ["markdown", "text", "html"], "default": "markdown" }
+        },
+        "required": ["url"]
+      },
+      "runner": "host"
+    }
+  ]
+}

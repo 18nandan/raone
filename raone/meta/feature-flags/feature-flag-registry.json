@@ -1,0 +1,13 @@
+{
+  "flags": [
+    { "id": "gmail", "key": "gmail", "scope": "assistant", "defaultEnabled": false },
+    { "id": "browser", "key": "browser", "scope": "assistant", "defaultEnabled": true },
+    { "id": "ces-tools", "key": "ces-tools", "scope": "assistant", "defaultEnabled": false },
+    { "id": "filesystem", "key": "filesystem", "scope": "assistant", "defaultEnabled": true },
+    { "id": "heartbeat", "key": "heartbeat", "scope": "assistant", "defaultEnabled": true },
+    { "id": "memory-extraction", "key": "memory-extraction", "scope": "assistant", "defaultEnabled": true },
+    { "id": "telegram-channel", "key": "telegram-channel", "scope": "gateway", "defaultEnabled": false },
+    { "id": "slack-channel", "key": "slack-channel", "scope": "gateway", "defaultEnabled": false },
+    { "id": "whatsapp-channel", "key": "whatsapp-channel", "scope": "gateway", "defaultEnabled": false }
+  ]
+}

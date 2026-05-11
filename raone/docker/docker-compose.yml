@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  assistant:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.assistant
+    user: "1001:1001"
+    volumes:
+      - workspace-data:/workspace:rw
+      - gateway-ipc:/run/gateway-ipc:rw
+      - assistant-ipc:/run/assistant-ipc:rw
+    environment:
+      VEILLUM_WORKSPACE_DIR: /workspace
+      RUNTIME_HTTP_PORT: 7821
+      IS_CONTAINERIZED: "true"
+      GATEWAY_IPC_SOCKET_DIR: /run/gateway-ipc
+      ASSISTANT_IPC_SOCKET_DIR: /run/assistant-ipc
+    ports:
+      - "7821:7821"
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gateway
+    volumes:
+      - workspace-data:/workspace:rw
+      - gateway-security:/gateway-security:rw
+      - gateway-ipc:/run/gateway-ipc:rw
+      - assistant-ipc:/run/assistant-ipc:rw
+    environment:
+      GATEWAY_PORT: 7830
+      DAEMON_URL: http://assistant:7821
+      GATEWAY_IPC_SOCKET_DIR: /run/gateway-ipc
+      ASSISTANT_IPC_SOCKET_DIR: /run/assistant-ipc
+      IS_CONTAINERIZED: "true"
+    ports:
+      - "7830:7830"
+    depends_on:
+      - assistant
+    restart: unless-stopped
+
+  ces:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.ces
+    volumes:
+      - workspace-data:/workspace:ro
+      - ces-security:/ces-security:rw
+    environment:
+      CREDENTIAL_SECURITY_DIR: /ces-security
+      CES_CREDENTIAL_PORT: 3000
+      IS_CONTAINERIZED: "true"
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  workspace-data:
+  gateway-security:
+  ces-security:
+  gateway-ipc:
+  assistant-ipc:

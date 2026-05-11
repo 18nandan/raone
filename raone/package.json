@@ -1,0 +1,11 @@
+{
+  "name": "raone-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [],
+  "scripts": {
+    "setup": "bash setup.sh",
+    "lint": "echo 'lint placeholder'",
+    "typecheck": "echo 'typecheck placeholder'"
+  }
+}

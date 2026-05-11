@@ -1,0 +1,12 @@
+{
+  "name": "@raoneai/meta",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "validate-flags": "bun run scripts/validate-flags.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "1.1.14",
+    "typescript": "5.7.2"
+  }
+}

@@ -1,0 +1,22 @@
+FROM oven/bun:1.3.11-alpine
+
+RUN addgroup -S raone && adduser -S -u 1001 -G raone raone
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY gateway/package.json gateway/bun.lock ./gateway/
+RUN cd gateway && bun install --frozen-lockfile
+
+COPY packages/ ./packages/
+RUN for pkg in packages/*/; do [ -f "${pkg}package.json" ] && cd "$pkg" && bun install --frozen-lockfile && cd /app; done
+
+COPY gateway/ ./gateway/
+RUN cd gateway && bun build src/index.ts --outdir dist --target bun
+
+USER raone
+EXPOSE 7830
+
+CMD ["bun", "run", "gateway/dist/index.js"]

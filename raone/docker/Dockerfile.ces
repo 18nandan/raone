@@ -1,0 +1,22 @@
+FROM oven/bun:1.3.11-alpine
+
+RUN addgroup -S raone && adduser -S -u 1001 -G raone raone
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY credential-executor/package.json credential-executor/bun.lock ./credential-executor/
+RUN cd credential-executor && bun install --frozen-lockfile
+
+COPY packages/ ./packages/
+RUN for pkg in packages/*/; do [ -f "${pkg}package.json" ] && cd "$pkg" && bun install --frozen-lockfile && cd /app; done
+
+COPY credential-executor/ ./credential-executor/
+RUN cd credential-executor && bun build src/index.ts --outdir dist --target bun
+
+USER raone
+EXPOSE 3000
+
+CMD ["bun", "run", "credential-executor/dist/index.js"]

@@ -1,0 +1,31 @@
+{
+  "tools": [
+    {
+      "name": "gmail_search",
+      "description": "Search Gmail inbox",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" },
+          "maxResults": { "type": "number", "default": 10 }
+        },
+        "required": ["query"]
+      },
+      "runner": "host"
+    },
+    {
+      "name": "gmail_send",
+      "description": "Send an email via Gmail",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": { "type": "string" },
+          "subject": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "required": ["to", "subject", "body"]
+      },
+      "runner": "host"
+    }
+  ]
+}
